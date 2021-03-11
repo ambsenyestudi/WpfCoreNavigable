@@ -21,6 +21,10 @@ namespace WpfNavigable.Front.ViewModels
         private void Navigate(object args)
         {
             mediator.Publish(new Navigated(nameof(GameView)));
+            
+        }
+        private void LaunchDialog()
+        {
             MessageBoxResult result = MessageBox.Show("Do you want to close this window?",
               "Confirmation",
               MessageBoxButton.YesNo,
