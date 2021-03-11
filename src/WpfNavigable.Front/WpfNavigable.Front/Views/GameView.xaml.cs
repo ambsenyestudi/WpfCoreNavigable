@@ -4,15 +4,17 @@ using WpfNavigable.Front.ViewModels;
 namespace WpfNavigable.Front.Views
 {
     /// <summary>
-    /// Interaction logic for WelcomeView.xaml
+    /// Interaction logic for GameView.xaml
     /// </summary>
-    public partial class WelcomeView : Page, INavigable
+    public partial class GameView : Page, INavigable
     {
-        public string ViewName => nameof(WelcomeView);
-        public WelcomeView(WelcomeViewModel viewModel)
+        public string ViewName => nameof(GameView);
+        public GameView(GameViewModel viewModel)
         {
             DataContext = viewModel;
             InitializeComponent();
         }
+
+        
     }
 }
