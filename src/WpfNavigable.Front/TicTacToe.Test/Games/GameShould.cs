@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TicTacToe.Domain.Games;
 using TicTacToe.Domain.Games.Agrgregate;
 using Xunit;
@@ -32,5 +33,27 @@ namespace TicTacToe.Test.Games
             var result = sut.Play(0, 0);
             Assert.Equal(exptectedResult, result);
         }
+        [Fact]
+        public void Not_Play_A_Played_Position()
+        {
+            var sut = new Game();
+            sut.Play(0, 0);
+            Assert.Throws<PostionAlreadyPlayedException>(() => sut.Play(0, 0));
+        }
+        [Theory]
+        [InlineData(
+            "X,X,X,"+
+            "O,O,"+
+            ",,")]
+        public void Tell_winne_When_Tree_In_A_Row_Horizontal(string gameLayout)
+        {
+            var expectedGameStatus = GameStatus.XWon;
+            var sut = new Game(gameLayout);
+            sut.Play(0, 0);
+            Assert.Equal(expectedGameStatus, sut.GetStatus());
+        }
+
+        
+
     }
 }
