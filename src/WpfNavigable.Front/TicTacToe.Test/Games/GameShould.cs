@@ -40,10 +40,50 @@ namespace TicTacToe.Test.Games
             Assert.Throws<PostionAlreadyPlayedException>(() => sut.Play(BoardRowColumn.Create(0, 0)));
         }
         [Theory]
+        /*
         [InlineData(
-            "X,X,X,"+
+            GameStatus.XWon,
+            "X,X,X," +
             "O,O,"+
             ",,")]
+        [InlineData(
+            GameStatus.XWon,
+            "O,,," +
+            "X,X,X," +
+            "O,,")]
+        [InlineData(
+            GameStatus.XWon,
+            "O,,," +
+            "O,,," +
+            "X,X,X")]        
+        [InlineData(
+            GameStatus.OWon,
+            "O,O,O," +
+            "X,X,," +
+            "X,X,")]        
+        */
+        [InlineData(
+            GameStatus.OWon,
+            "X,X,," +
+            "O,O,O," +
+            "X,X,")]
+        [InlineData(
+            GameStatus.OWon,
+            "X,X,," +
+            "X,X,," +
+            "O,O,O,")]
+        public void Tell_winne_When_Three_In_A_Row_Horizontal(GameStatus expectedGameStatus, string gameLayout)
+        {
+            var sut = new Game(gameLayout);
+            var actual = sut.GetStatus();
+            Assert.Equal(expectedGameStatus, actual);
+        }
+        /*
+        [Theory]
+        [InlineData(
+            "X,O,X," +
+            "X,O,O" +
+            "X,,")]
         [InlineData(
             "O,," +
             "X,X,X," +
@@ -52,15 +92,13 @@ namespace TicTacToe.Test.Games
             "O,," +
             "O,," +
             "X,X,X,")]
-        public void Tell_winne_When_Tree_In_A_Row_Horizontal(string gameLayout)
+        public void Tell_winne_When_Three_In_A_Row_Vertial(string gameLayout)
         {
             var expectedGameStatus = GameStatus.XWon;
             var sut = new Game(gameLayout);
             var actual = sut.GetStatus();
             Assert.Equal(expectedGameStatus, actual);
         }
-
-        
-
+        */
     }
 }
