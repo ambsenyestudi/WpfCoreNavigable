@@ -1,42 +1,57 @@
 ﻿using System;
+using System.Linq;
 
 namespace TicTacToe.Domain.Games.Agrgregate
 {
     public class Game
     {
         private readonly BoardState boardState;
-        private SquareCollection squareCollection;
+        private Board board;
         private GameStatus status;
 
         public Game(string gameLayout="")
         {
             boardState = BoardState.Empty;
-            squareCollection = new SquareCollection();
-            SetGameLayout(gameLayout);
             status = GameStatus.Playing;
+            board = new Board();
+            SetGameLayout(gameLayout);
+            
         }
 
         public override string ToString() =>
-            squareCollection.ToString();
+            board.ToString();
 
         public BoardState GetBoardState() =>
             boardState;
         public GameStatus GetStatus() => 
             status;
 
-        public string Play(int row, int column)
+        public string Play(BoardRowColumn boardRowColumn)
         {
-            var nextSquare = NextSquare();
-            squareCollection.Add(row, column, nextSquare);
+            var result = board.Play(boardRowColumn.ToListIndex());
             UpdateStatus();
-            return nextSquare.Value;
+            return result;
         }
 
 
         private void UpdateStatus()
         {
-            status = GameStatus.Playing;
+            var winner = board.GetWinner();
+            UpdateWinner(winner);
         }
+
+        private void UpdateWinner(Winner winner)
+        {
+            if(winner==new Winner(ChipTypes.X))
+            {
+                status = GameStatus.XWon;
+            }
+            if(winner == new Winner(ChipTypes.O))
+            {
+                status = GameStatus.OWon;
+            }
+        }
+
         private void SetGameLayout(string gameLayout)
         {
             if(!string.IsNullOrWhiteSpace(gameLayout))
@@ -48,29 +63,29 @@ namespace TicTacToe.Domain.Games.Agrgregate
 
         private void PlayLayout(string[] plays)
         {
-            for (int i = 0; i < plays.Length; i++)
+            var moveList = plays.Select((play, index) => new { ChipType = ToChipType(play), index = index });
+            var xMoveList = moveList.Where(x => x.ChipType == ChipTypes.X).ToList();
+            var oPositionList = moveList.Where(x => x.ChipType == ChipTypes.O).ToList();
+            for (int i = 0; i < xMoveList.Count; i++)
             {
-                var nextSquare = NextSquare();
-                var (row, column) = IndexToRowColumn(i);
-                squareCollection.Add(row, column, nextSquare);
+                var currentX = ListIndex.Create(xMoveList[i].index);
+                board.Play(currentX);
+                if (i < oPositionList.Count)
+                {
+                    var currentO = ListIndex.Create(oPositionList[i].index);
+                    board.Play(currentO);
+                }
             }
+            UpdateStatus();
         }
-        private (int, int) IndexToRowColumn(int index)
+
+        private ChipTypes ToChipType(string play)
         {
-            var column = GetColumn(index);
-            var row = GetRow(index);
-            return (row, column);
+            if(!Enum.TryParse<ChipTypes>(play, out ChipTypes chip))
+            {
+                return ChipTypes.None;
+            }
+            return chip;
         }
-        private int GetColumn(int index) =>
-            index % SquareCollection.DIMENSION;
-
-        private int GetRow(int index) =>
-            index / SquareCollection.DIMENSION;
-
-        private Square NextSquare() =>
-            squareCollection.FullPositionCount % 2 == 0
-                ? Square.CreateX()
-                : Square.CreateO();
-
     }
 }

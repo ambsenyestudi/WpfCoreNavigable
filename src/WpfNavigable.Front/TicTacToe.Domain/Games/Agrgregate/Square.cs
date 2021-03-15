@@ -1,19 +1,25 @@
-﻿namespace TicTacToe.Domain.Games.Agrgregate
+﻿using System;
+
+namespace TicTacToe.Domain.Games.Agrgregate
 {
     internal record Square
     {
-        public static Square Empty { get; } = new Square("");
+        public static Square Empty { get; } = new Square(ChipTypes.None);
         
-        public const string X = "X";
-        public const string O = "O";
         public string Value { get; }
         
-        private Square(string value) => (Value) = (value);
+        internal Square(ChipTypes chip)
+        {
+            Value = ChipToString(chip);
+        }
 
-        public static Square CreateX() =>
-            new Square(X);
-        public static Square CreateO() =>
-            new Square(O);
-
+        private string ChipToString(ChipTypes chip)
+        {
+            if(chip==ChipTypes.None)
+            {
+                return string.Empty;
+            }
+            return chip.ToString();
+        }
     }
 }
