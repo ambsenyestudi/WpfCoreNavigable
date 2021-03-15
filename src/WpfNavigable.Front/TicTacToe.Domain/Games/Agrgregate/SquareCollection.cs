@@ -40,10 +40,10 @@ namespace TicTacToe.Domain.Games.Agrgregate
         internal void Add(ListIndex index, Square square) =>
             itemList.Add(square);
         
-        internal BoardLine LineFromLineRange(ListIndexRange indexRange) =>
+        internal SquareLine LineFromLineRange(ListIndexRange indexRange) =>
             indexRange.Count != Board.DIMENSION
                 ? throw new InvalidOperationException("")
-                : new BoardLine(
+                : new SquareLine(
                     this[indexRange.Range.First()],
                     this[indexRange.Range[1]],
                     this[indexRange.Range.Last()]);

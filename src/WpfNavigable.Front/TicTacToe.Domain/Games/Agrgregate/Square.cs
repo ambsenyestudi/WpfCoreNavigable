@@ -21,5 +21,9 @@ namespace TicTacToe.Domain.Games.Agrgregate
             }
             return chip.ToString();
         }
+        public ChipTypes ToChipType() =>
+            string.IsNullOrWhiteSpace(Value)
+            ? ChipTypes.None
+            : Enum.Parse<ChipTypes>(Value);
     }
 }
