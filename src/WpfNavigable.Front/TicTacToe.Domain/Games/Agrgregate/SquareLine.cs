@@ -10,15 +10,15 @@ namespace TicTacToe.Domain.Games.Agrgregate
 
         internal SquareLine(Square first, Square second, Square third) => (First, Second, Third) = (first, second, third);
 
-        internal Winner GetWinner()
+        internal MatchResult GetWinner()
         {
             var chipLine = ToChipLine();
             if (!chipLine.IsFull() || !chipLine.GetAllSame())
             {
-                return Winner.None;
+                return MatchResult.None;
             }
             var winningChip = Enum.Parse<ChipTypes>(First.Value);
-            return new Winner(winningChip);
+            return new MatchResult(winningChip);
         }
         internal ChipLine ToChipLine() =>
             new ChipLine(

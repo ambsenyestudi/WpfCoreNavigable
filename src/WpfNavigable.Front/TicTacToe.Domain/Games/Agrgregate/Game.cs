@@ -40,13 +40,13 @@ namespace TicTacToe.Domain.Games.Agrgregate
             UpdateWinner(winner);
         }
 
-        private void UpdateWinner(Winner winner)
+        private void UpdateWinner(MatchResult winner)
         {
-            if(winner==new Winner(ChipTypes.X))
+            if(winner==new MatchResult(ChipTypes.X))
             {
                 status = GameStatus.XWon;
             }
-            if(winner == new Winner(ChipTypes.O))
+            if(winner == new MatchResult(ChipTypes.O))
             {
                 status = GameStatus.OWon;
             }

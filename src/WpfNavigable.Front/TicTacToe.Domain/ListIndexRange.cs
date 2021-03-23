@@ -33,7 +33,7 @@ namespace TicTacToe.Domain
             var indexRange = new int[count];
             for (int i = 0; i < count; i++)
             {
-                indexRange[i] = start + 1;
+                indexRange[i] = start + i;
             }
             return ToListIndexCollection(indexRange);
         }

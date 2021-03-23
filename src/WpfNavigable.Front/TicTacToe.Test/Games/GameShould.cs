@@ -40,7 +40,6 @@ namespace TicTacToe.Test.Games
             Assert.Throws<PostionAlreadyPlayedException>(() => sut.Play(BoardRowColumn.Create(0, 0)));
         }
         [Theory]
-        /*
         [InlineData(
             GameStatus.XWon,
             "X,X,X," +
@@ -61,7 +60,6 @@ namespace TicTacToe.Test.Games
             "O,O,O," +
             "X,X,," +
             "X,X,")]        
-        */
         [InlineData(
             GameStatus.OWon,
             "X,X,," +
@@ -72,33 +70,76 @@ namespace TicTacToe.Test.Games
             "X,X,," +
             "X,X,," +
             "O,O,O,")]
-        public void Tell_winne_When_Three_In_A_Row_Horizontal(GameStatus expectedGameStatus, string gameLayout)
+        public void Tell_Who_Wins_Rows(GameStatus expectedGameStatus, string gameLayout)
         {
             var sut = new Game(gameLayout);
             var actual = sut.GetStatus();
             Assert.Equal(expectedGameStatus, actual);
         }
-        /*
+        
         [Theory]
         [InlineData(
-            "X,O,X," +
-            "X,O,O" +
+            GameStatus.XWon,
+            "X,O,," +
+            "X,O,," +
             "X,,")]
         [InlineData(
-            "O,," +
-            "X,X,X," +
+            GameStatus.XWon,
+            "O,X,," +
+            "O,X,," +
+            ",X,")]
+        [InlineData(
+            GameStatus.XWon,
+            "O,,X," +
+            "O,,X," +
+            ",,X")]
+        [InlineData(
+            GameStatus.OWon,
+            "O,X,X," +
+            "O,X,X," +
             "O,,")]
         [InlineData(
-            "O,," +
-            "O,," +
-            "X,X,X,")]
-        public void Tell_winne_When_Three_In_A_Row_Vertial(string gameLayout)
+            GameStatus.OWon,
+            "X,O,X," +
+            "X,O,X," +
+            ",O,")]
+        [InlineData(
+            GameStatus.OWon,
+            "X,X,O," +
+            "X,X,O," +
+            ",,O")]
+        public void Tell_Who_Wins_Columns(GameStatus expectedGameStatus, string gameLayout)
         {
-            var expectedGameStatus = GameStatus.XWon;
             var sut = new Game(gameLayout);
             var actual = sut.GetStatus();
             Assert.Equal(expectedGameStatus, actual);
         }
-        */
+        [Theory]
+        [InlineData(
+            GameStatus.XWon,
+            "X,O,," +
+            "O,X,," +
+            ",,X")]
+        [InlineData(
+            GameStatus.XWon,
+            ",O,X," +
+            "O,X,," +
+            "X,,")]
+        [InlineData(
+            GameStatus.OWon,
+            "O,X,," +
+            ",O,X," +
+            "X,,O")]
+        [InlineData(
+            GameStatus.OWon,
+            "X,,O," +
+            ",O,X," +
+            "O,X,")]
+        public void Tell_Who_Wins_Diagonals(GameStatus expectedGameStatus, string gameLayout)
+        {
+            var sut = new Game(gameLayout);
+            var actual = sut.GetStatus();
+            Assert.Equal(expectedGameStatus, actual);
+        }
     }
 }
