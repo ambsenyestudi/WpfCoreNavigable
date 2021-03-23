@@ -27,8 +27,8 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Content="{Binding TL}" Command="{Binding PlayCommand}" CommandParameter="TL"/>
-            <Button Content="{Binding TC}" Grid.Column="1"/>
+            <Button Content="{Binding TL}" FontSize="24" Command="{Binding PlayCommand}" CommandParameter="TL"/>
+            <Button Content="{Binding TC}" FontSize="24" Command="{Binding PlayCommand}" CommandParameter="TC" Grid.Column="1"/>
             <Button Content="{Binding TR}" Grid.Column="2"/>
             <Button Content="{Binding ML}" Grid.Row="1"/>
             <Button Content="{Binding MC}" Grid.Row="1" Grid.Column="1"/>

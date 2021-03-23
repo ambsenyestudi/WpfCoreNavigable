@@ -28,6 +28,18 @@ namespace WpfNavigable.Front.ViewModels
                 OnPropertyChanged();
             }
         }
+        private string tc;
+
+        public string TC
+        {
+            get => tc;
+            set 
+            { 
+                tc = value;
+                OnPropertyChanged();
+            }
+        }
+
         public GameViewModel(IMediator mediator)
         {
             this.mediator = mediator;
@@ -36,10 +48,11 @@ namespace WpfNavigable.Front.ViewModels
 
         private void PlaceChip(object obj)
         {
+            //todo fire mediator message
             var position = obj as string;
             if(CanPlayPosition(position))
             {
-                TL="X";
+                Play(position);
             }
             var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             path += @"\TicTacToe";
@@ -58,6 +71,18 @@ namespace WpfNavigable.Front.ViewModels
 
         }
 
+        private void Play(string position)
+        {
+            if(position =="TL")
+            {
+                TL = "X";
+            }
+            else if(position =="TC")
+            {
+                TC = "O";
+            }
+        }
+
         private bool CanPlayPosition(string position) =>
             IsValidPostion(position)
             ? IsPostionEmpty(position)
@@ -65,11 +90,18 @@ namespace WpfNavigable.Front.ViewModels
 
         private bool IsPostionEmpty(string position)
         {
-            return string.IsNullOrEmpty(TL);
+            var boardPostion = GetPostionsFromName(position);
+            return string.IsNullOrEmpty(boardPostion);
         }
 
         private bool IsValidPostion(string position) =>
             !string.IsNullOrWhiteSpace(position) && 
                 Enum.TryParse<BoardPositions>(position, out BoardPositions bPosition);
+
+        private string GetPostionsFromName(string posName)
+        {
+            var pInfo = this.GetType().GetProperty(posName);
+            return pInfo.GetValue(this) as string;
+        }
     }
 }
