@@ -39,15 +39,24 @@ namespace TicTacToe.Application.Games
                 BoardSnapshot = boardSnapshot
             };
         }
+
         public async Task<GameStatusDTO> GetGameStatus(Guid gameId)
         {
             var currentGame = await GetGameFrom(gameId);
-            var boardState = currentGame.GetStatus().ToString();
-            if(!Enum.TryParse<GameStatus>(boardState, out GameStatus gameStatus))
+            var boardState = currentGame.GetStatus();
+            if(!Enum.TryParse<GameStatus>(boardState.ToString(), out GameStatus gameStatus))
             {
-                return new GameStatusDTO { Status = GameStatus.None };
+                return new GameStatusDTO 
+                { 
+                    Status = GameStatus.None, 
+                    DisplayName = boardState.DisplayName
+                };
             }
-            return new GameStatusDTO { Status = gameStatus };
+            return new GameStatusDTO 
+            { 
+                Status = gameStatus,
+                DisplayName = boardState.DisplayName
+            };
         }
 
         private Task<string> GetBoardLayout(Guid gameIdRaw) =>

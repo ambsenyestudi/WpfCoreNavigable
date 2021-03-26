@@ -94,7 +94,7 @@ namespace WpfNavigable.Front.ViewModels
                 }
                 if(isEndOfGame(gameStatus))
                 {
-                    MessageBoxResult result = MessageBox.Show(gameStatus.Status.ToString(),
+                    MessageBoxResult result = MessageBox.Show(gameStatus.DisplayName,
                      "Game ended",
                      MessageBoxButton.OK,
                      MessageBoxImage.Question);
