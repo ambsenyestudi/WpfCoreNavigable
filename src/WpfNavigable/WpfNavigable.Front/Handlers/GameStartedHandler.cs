@@ -30,7 +30,7 @@ namespace WpfNavigable.Front.Handlers
         public async Task Handle(GameStarted notification, CancellationToken cancellationToken)
         {
             var gameId = await gameService.CreateGameAsync();
-            Dispatcher.Invoke(()=>viewModel.Reset(gameId),
+            Dispatcher.Invoke(()=>viewModel.Reset(gameId.Value),
                     DispatcherPriority.Background,
                     cancellationToken);
         }

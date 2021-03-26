@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using TicTacToe.Application.DTO;
 using TicTacToe.Domain;
 using TicTacToe.Domain.Games;
 using TicTacToe.Domain.Games.Agrgregate;
@@ -29,8 +30,25 @@ namespace TicTacToe.Application.Games
             await repository.SaveGame(currGame);
         }
 
-        public Task<string> GetBoradLayoutAsync(Guid gameIdRaw) =>
-            GetBoardLayout(gameIdRaw);
+        public async Task<GameSnapshotDTO> GetGameSnapshotAsync(Guid gameIdRaw)
+        {
+            var boardSnapshot = await GetBoardLayout(gameIdRaw);
+            return new GameSnapshotDTO
+            {
+                Id = gameIdRaw,
+                BoardSnapshot = boardSnapshot
+            };
+        }
+        public async Task<GameStatusDTO> GetGameStatus(Guid gameId)
+        {
+            var currentGame = await GetGameFrom(gameId);
+            var boardState = currentGame.GetStatus().ToString();
+            if(!Enum.TryParse<GameStatus>(boardState, out GameStatus gameStatus))
+            {
+                return new GameStatusDTO { Status = GameStatus.None };
+            }
+            return new GameStatusDTO { Status = gameStatus };
+        }
 
         private Task<string> GetBoardLayout(Guid gameIdRaw) =>
             repository.GetBoardLayout(GameId.Create(gameIdRaw));
@@ -51,5 +69,7 @@ namespace TicTacToe.Application.Games
             var storedGameId = await repository.CreateGame(game);
             return await repository.GetGame(storedGameId);
         }
+
+       
     }
 }

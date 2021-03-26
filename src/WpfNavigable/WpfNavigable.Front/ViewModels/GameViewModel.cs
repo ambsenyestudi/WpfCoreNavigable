@@ -8,6 +8,10 @@ using WpfNavigable.Front.Notifications;
 using WpfNavigable.Front.Queries;
 using WpfNavigable.Front.ViewModels.Base;
 using TicTacToe.Front.Models;
+using TicTacToe.Application.DTO;
+using TicTacToe.Application.Games;
+using System.Windows;
+using WpfNavigable.Front.Views;
 
 namespace WpfNavigable.Front.ViewModels
 {
@@ -69,23 +73,44 @@ namespace WpfNavigable.Front.ViewModels
 
         }
 
-        public void Reset(GameId gameId)
+        public void Reset(Guid gameId)
         {
-            GameId = gameId.Value;
+            GameId = gameId;
             BoardLayout = TicTacToeBoardLayout.Empty;
         }
 
         private async void Play(int row, int column)
         {
             await mediator.Publish(new ChipPlayed(GameId, row, column));
-            var boardLayout = await mediator.Send(new BoardLayoutQuery(GameId));
+            var gameStatus = await mediator.Send(new GameStatusQuery(GameId));
+            var gameSnapshot = await mediator.Send(new GameSnapshotQuery(GameId));
+            var isUpdateBoard = TicTacToeBoardLayout.TryParse(gameSnapshot.BoardSnapshot, out TicTacToeBoardLayout parsedBoardLayout);
+            
             Dispatcher.Invoke(() =>
             {
-                if(TicTacToeBoardLayout.TryParse(boardLayout, out TicTacToeBoardLayout parsedBoardLayout))
+                if(isUpdateBoard)
                 {
                     BoardLayout = parsedBoardLayout;
                 }
+                if(isEndOfGame(gameStatus))
+                {
+                    MessageBoxResult result = MessageBox.Show(gameStatus.Status.ToString(),
+                     "Game ended",
+                     MessageBoxButton.OK,
+                     MessageBoxImage.Question);
+                    Reset(Guid.Empty);
+                    mediator.Publish(new Navigated(nameof(WelcomeView)));
+                }
             },DispatcherPriority.Background);
+        }
+
+        private bool isEndOfGame(GameStatusDTO gameStatus)
+        {
+            var status = gameStatus.Status;
+
+            return status == GameStatus.Draw ||
+                status == GameStatus.XWon ||
+                status == GameStatus.OWon;
         }
 
         private (int, int) ToRowColumn(string boardPosition) => 
