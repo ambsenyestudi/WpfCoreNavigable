@@ -39,21 +39,22 @@ namespace TicTacToe.Domain.Games.Agrgregate
 
         private void UpdateStatus()
         {
+            if(board.IsFull())
+            {
+                status = GameStatus.Draw;
+            }
             var winner = board.GetWinner();
-            UpdateWinner(winner);
-        }
 
-        private void UpdateWinner(MatchResult winner)
-        {
-            if(winner==new MatchResult(ChipTypes.X))
+            if (winner == new MatchResult(ChipTypes.X))
             {
                 status = GameStatus.XWon;
             }
-            if(winner == new MatchResult(ChipTypes.O))
+            if (winner == new MatchResult(ChipTypes.O))
             {
                 status = GameStatus.OWon;
             }
         }
+
 
         private void SetGameLayout(string gameLayout)
         {

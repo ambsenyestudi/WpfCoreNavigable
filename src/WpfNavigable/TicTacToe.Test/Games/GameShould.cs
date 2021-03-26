@@ -146,5 +146,23 @@ namespace TicTacToe.Test.Games
             var actual = sut.GetStatus();
             Assert.Equal(expectedGameStatus, actual);
         }
+
+        [Theory]
+        [InlineData(
+            GameStatus.Draw,
+            "X,X,O," +
+            "O,X,X," +
+            "X,O,O")]
+        [InlineData(
+            GameStatus.Draw,
+            "X,O,X," +
+            "O,X,X," +
+            "O,X,O")]
+        public void Should_Draw_When_No_Winner(GameStatus expectedGameStatus, string gameLayout)
+        {
+            var sut = new Game(Id, gameLayout);
+            var actual = sut.GetStatus();
+            Assert.Equal(expectedGameStatus, actual);
+        }
     }
 }

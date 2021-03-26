@@ -31,6 +31,8 @@
 
         public MatchResult GetWinner() => winner;
 
+        public bool IsFull() => squareCollection.FullPositionCount == DIMENSION * DIMENSION;
+
         private Square NextSquare() =>
             squareCollection.FullPositionCount % 2 == 0
                 ? new Square(ChipTypes.X)
