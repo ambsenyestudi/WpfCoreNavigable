@@ -10,17 +10,19 @@ namespace WpfNavigable.Front.ViewModels
     public class WelcomeViewModel
     {
         private readonly IMediator mediator;
-        public ICommand NavigateCommand { get; }
+        public ICommand StartGameCommand { get; }
         
         public WelcomeViewModel(IMediator mediator)
         {
             this.mediator = mediator;
-            NavigateCommand = new RelayCommand(Navigate);
+            StartGameCommand = new RelayCommand(StartGame);
         }
 
-        private void Navigate(object args)
+        private void StartGame(object args)
         {
+            mediator.Publish(new GameStarted());
             mediator.Publish(new Navigated(nameof(GameView)));
+
             
         }
         private void LaunchDialog()

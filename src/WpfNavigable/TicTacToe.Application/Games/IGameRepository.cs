@@ -6,7 +6,8 @@ namespace TicTacToe.Application.Games
 {
     public interface IGameRepository
     {
-        Task<Game> GetGame(GameId gameId);
+        Task<string> GetBoardLayout(GameId id);
+        Task<Game> GetGame(GameId id);
 
         Task<GameId> SaveGame(Game game);
         Task<GameId> CreateGame(Game game);

@@ -28,6 +28,5 @@ namespace TicTacToe.Domain.Games
             return new BoardRowColumn(row, column);
         }
 
-        
     }
 }

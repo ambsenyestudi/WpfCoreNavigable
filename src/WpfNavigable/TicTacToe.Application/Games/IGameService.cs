@@ -8,5 +8,6 @@ namespace TicTacToe.Application.Games
     {
         Task<GameId> CreateGameAsync();
         Task PlayAsync(Guid gameId, int row, int column);
+        Task<string> GetBoradLayoutAsync(Guid gameId);
     }
 }

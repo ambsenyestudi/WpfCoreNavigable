@@ -14,41 +14,36 @@ namespace TicTacToe.Application.Games
         {
             this.repository = repository;
         }
+
         public async Task<GameId> CreateGameAsync()
         {
-            var storedGame = await CreateGameAsync(Guid.NewGuid());
+            var storedGame = await CreateNewGameAsync();
             return storedGame.Id;
         }
 
-        public async Task PlayAsync(Guid gameId, int row, int column)
+        public async Task PlayAsync(Guid gameIdRaw, int row, int column)
         {
-            var currGame = await CreateIfNotExists(gameId);
-            var boardColumnRow = BoardRowColumn.Create(0, 0);
+            var currGame = await GetGameFrom(gameIdRaw);
+            var boardColumnRow = BoardRowColumn.Create(row, column);
             currGame.Play(boardColumnRow);
             await repository.SaveGame(currGame);
         }
 
-        private Task<Game> CreateIfNotExists(Guid id)
-        {
-            try
-            {
-                return GetFromGame(id);
-            }
-            catch(GameNotFoundException gnfEx)
-            {
-                return CreateGameAsync(id);
-            }
-        }
+        public Task<string> GetBoradLayoutAsync(Guid gameIdRaw) =>
+            GetBoardLayout(gameIdRaw);
 
-        private Task<Game> GetFromGame(Guid id) =>
+        private Task<string> GetBoardLayout(Guid gameIdRaw) =>
+            repository.GetBoardLayout(GameId.Create(gameIdRaw));
+
+        private Task<Game> GetGameFrom(Guid id) =>
             repository.GetGame(GameId.Create(id));
-        private Task<Game> CreateGameAsync(Guid id) =>
-            CreateGameAsync(GameId.Create(id));
 
+        private Task<Game> CreateNewGameAsync() =>
+            CreateNewGameAsync(GameId.Empty);
 
-        private async Task<Game> CreateGameAsync(GameId gameId)
+        private async Task<Game> CreateNewGameAsync(GameId gameId)
         {
-            if(gameId == GameId.Empty)
+            if (gameId == GameId.Empty)
             {
                 gameId = GameId.Create(Guid.NewGuid());
             }

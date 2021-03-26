@@ -2,26 +2,27 @@
 using System;
 using System.IO;
 using System.Windows.Input;
+using System.Windows.Threading;
+using TicTacToe.Domain;
 using WpfNavigable.Front.Notifications;
+using WpfNavigable.Front.Queries;
 using WpfNavigable.Front.ViewModels.Base;
 
 namespace WpfNavigable.Front.ViewModels
 {
-    public enum BoardPositions
-    {
-        None, TL, TC, TR,
-        ML, MC, MR,
-        BL, BC, BR,
-    }
     public class GameViewModel:ViewModelBase
     {
+        public const string EMPTY_BOARD_LAYOUT = ",,,,,,,,";
+
+        public Dispatcher Dispatcher { get; }
+
         private readonly IMediator mediator;
 
-        public Guid GameId { get; set; }
+        public Guid GameId { get; private set; }
 
         public ICommand PlayCommand { get; }
 
-        private string boardLayout = ",,,,,,,,";
+        private string boardLayout = EMPTY_BOARD_LAYOUT;
 
         public string BoardLayout
         {
@@ -33,31 +34,9 @@ namespace WpfNavigable.Front.ViewModels
             }
         }
 
-
-        private string tl;
-        public string TL 
-        {
-            get => tl;
-            set
-            {
-                tl = value;
-                OnPropertyChanged();
-            }
-        }
-        private string tc;
-
-        public string TC
-        {
-            get => tc;
-            set 
-            { 
-                tc = value;
-                OnPropertyChanged();
-            }
-        }
-
         public GameViewModel(IMediator mediator)
         {
+            Dispatcher = Dispatcher.CurrentDispatcher;
             this.mediator = mediator;
             PlayCommand = new RelayCommand(PlaceChip);
         }
@@ -66,9 +45,10 @@ namespace WpfNavigable.Front.ViewModels
         {
             //todo fire mediator message
             var position = obj as string;
-            if(CanPlayPosition(position))
+            var (row, column) = ToRowColumn(position);
+            if (CanPlayPosition(row, column))
             {
-                Play(position);
+                Play(row, column);
             }
             //Move all of this to encryption service
             var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -88,62 +68,39 @@ namespace WpfNavigable.Front.ViewModels
 
         }
 
-        private async void Play(string boardPosition)
+        public void Reset(GameId gameId)
         {
-            var (row, column) = ToRowColumn(boardPosition);
+            GameId = gameId.Value;
+            BoardLayout = EMPTY_BOARD_LAYOUT;
+        }
+
+        private async void Play(int row, int column)
+        {
             await mediator.Publish(new ChipPlayed(GameId, row, column));
+            var boardLayout = await mediator.Send(new BoardLayoutQuery(GameId));
+            Dispatcher.Invoke(() =>
+            {
+                BoardLayout = boardLayout;
+            },DispatcherPriority.Background);
         }
 
-        private (int, int) ToRowColumn(string boardPosition)
-        {
-            if(boardPosition.StartsWith("T"))
-            {
-                return (0, GetColumn(boardPosition[1]));
-            }
-            if (boardPosition.StartsWith("M"))
-            {
-                return (1, GetColumn(boardPosition[1]));
-            }
-            if (boardPosition.StartsWith("B"))
-            {
-                return (2, GetColumn(boardPosition[1]));
-            }
+        private (int, int) ToRowColumn(string boardPosition) => 
+            boardPosition.ToRowAndColumn();
 
-            return (-1, -1);
-        }
-
-        private int GetColumn(char column)
-        {
-            if(column=='R')
-            {
-                return 2;
-            }
-            if(column=='C')
-            {
-                return 1;
-            }
-            return 0;
-        }
-
-        private bool CanPlayPosition(string position) =>
-            IsValidPostion(position)
-            ? IsPostionEmpty(position)
+        private bool CanPlayPosition(int row, int column) =>
+            IsValidPostion(row, column)
+            ? IsPostionEmpty(row, column)
             : false;
 
-        private bool IsPostionEmpty(string position)
+        private bool IsPostionEmpty(int row, int column)
         {
-            var boardPostion = GetPostionsFromName(position);
-            return string.IsNullOrEmpty(boardPostion);
+            //todo
+            return true;
         }
 
-        private bool IsValidPostion(string position) =>
-            !string.IsNullOrWhiteSpace(position) && 
-                Enum.TryParse<BoardPositions>(position, out BoardPositions bPosition);
+        private bool IsValidPostion(int row, int column) =>
+            row >= 0 && column >= 0;
 
-        private string GetPostionsFromName(string posName)
-        {
-            var pInfo = this.GetType().GetProperty(posName);
-            return pInfo.GetValue(this) as string;
-        }
+        
     }
 }

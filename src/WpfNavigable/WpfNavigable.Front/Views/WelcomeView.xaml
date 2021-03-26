@@ -10,8 +10,8 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Welcome"/>
-            <Button Content="Go" Command="{Binding NavigateCommand}"/>
+            <Label Content="Welcome to tic tac toe "/>
+            <Button Content="Start" Command="{Binding StartGameCommand}" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Page>

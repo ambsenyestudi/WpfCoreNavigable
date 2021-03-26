@@ -36,13 +36,20 @@
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="00"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=01}" 
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="01" Grid.Column="1"/>
-            <Button Content="{Binding TR}" Grid.Column="2"/>
-            <Button Content="{Binding ML}" Grid.Row="1"/>
-            <Button Content="{Binding MC}" Grid.Row="1" Grid.Column="1"/>
-            <Button Content="{Binding MR}" Grid.Row="1" Grid.Column="2"/>
-            <Button Content="{Binding BL}" Grid.Row="2"/>
-            <Button Content="{Binding BC}" Grid.Row="2" Grid.Column="1"/>
-            <Button Content="{Binding BR}" Grid.Row="2" Grid.Column="2"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=02}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="02" Grid.Column="2"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=10}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="10" Grid.Row="1"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=11}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="11" Grid.Row="1" Grid.Column="1"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=12}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="12" Grid.Row="1" Grid.Column="2"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=20}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="20" Grid.Row="2"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=21}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="21" Grid.Row="2" Grid.Column="1"/>
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=22}" 
+                    FontSize="24" Command="{Binding PlayCommand}" CommandParameter="22" Grid.Row="2" Grid.Column="2"/>
         </Grid>
         
     </Grid>
