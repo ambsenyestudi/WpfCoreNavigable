@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TicTacToe.Application\TicTacToe.Application.csproj" />
+    <ProjectReference Include="..\TicTacToe.Front\TicTacToe.Front.csproj" />
     <ProjectReference Include="..\TicTacToe.Infrastructure\TicTacToe.Infrastructure.csproj" />
   </ItemGroup>
 

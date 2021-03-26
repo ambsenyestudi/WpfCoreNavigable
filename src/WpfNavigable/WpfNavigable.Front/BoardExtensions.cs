@@ -7,10 +7,15 @@ namespace WpfNavigable.Front
     {
         private const string DEFAULT_SEPARATOR = ",";
 
+        public static string AddSepartor(this string serializedUnseparatedPostion, string separator = DEFAULT_SEPARATOR) =>
+            string.IsNullOrWhiteSpace(serializedUnseparatedPostion)
+            ? string.Empty
+            : string.Join(separator, serializedUnseparatedPostion.Select(x => x));
+
         public static (int, int) ToRowAndColumn(this string serializedUnseparatedPostion) =>
             string.IsNullOrWhiteSpace(serializedUnseparatedPostion)
             ? ToPostions(new List<string>())
-            : ToPostions(string.Join(DEFAULT_SEPARATOR, serializedUnseparatedPostion.Select(x => x))
+            : ToPostions(serializedUnseparatedPostion.AddSepartor()
                 .Split(DEFAULT_SEPARATOR));
 
         public static (int,int) ToPostions(IList<string> rawPostionsList)
