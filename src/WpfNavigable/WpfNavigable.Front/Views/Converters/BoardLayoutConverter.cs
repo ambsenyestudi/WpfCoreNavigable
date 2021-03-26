@@ -11,11 +11,7 @@ namespace WpfNavigable.Front.Views.Converters
         
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var boardLayoutRaw = value as string;
-            if (!TicTacToeBoardLayout.TryParse(boardLayoutRaw, out TicTacToeBoardLayout boardLayout))
-            {
-                return string.Empty;
-            }
+            var boardLayout = value as TicTacToeBoardLayout;
             var serializedUnseparatedPostion = parameter as string;
             var (row,column) = serializedUnseparatedPostion.ToRowAndColumn();
            

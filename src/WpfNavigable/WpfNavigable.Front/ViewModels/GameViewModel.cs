@@ -7,12 +7,13 @@ using TicTacToe.Domain;
 using WpfNavigable.Front.Notifications;
 using WpfNavigable.Front.Queries;
 using WpfNavigable.Front.ViewModels.Base;
+using TicTacToe.Front.Models;
 
 namespace WpfNavigable.Front.ViewModels
 {
     public class GameViewModel:ViewModelBase
     {
-        public const string EMPTY_BOARD_LAYOUT = ",,,,,,,,";
+        
 
         public Dispatcher Dispatcher { get; }
 
@@ -22,9 +23,9 @@ namespace WpfNavigable.Front.ViewModels
 
         public ICommand PlayCommand { get; }
 
-        private string boardLayout = EMPTY_BOARD_LAYOUT;
+        private TicTacToeBoardLayout boardLayout = TicTacToeBoardLayout.Empty;
 
-        public string BoardLayout
+        public TicTacToeBoardLayout BoardLayout
         {
             get => boardLayout;
             set
@@ -71,7 +72,7 @@ namespace WpfNavigable.Front.ViewModels
         public void Reset(GameId gameId)
         {
             GameId = gameId.Value;
-            BoardLayout = EMPTY_BOARD_LAYOUT;
+            BoardLayout = TicTacToeBoardLayout.Empty;
         }
 
         private async void Play(int row, int column)
@@ -80,7 +81,10 @@ namespace WpfNavigable.Front.ViewModels
             var boardLayout = await mediator.Send(new BoardLayoutQuery(GameId));
             Dispatcher.Invoke(() =>
             {
-                BoardLayout = boardLayout;
+                if(TicTacToeBoardLayout.TryParse(boardLayout, out TicTacToeBoardLayout parsedBoardLayout))
+                {
+                    BoardLayout = parsedBoardLayout;
+                }
             },DispatcherPriority.Background);
         }
 
