@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace WpfNavigable.Front.Notifications
+namespace TicTacToe.Front.Notifications
 {
     public class Navigated : INotification
     {
@@ -11,5 +11,4 @@ namespace WpfNavigable.Front.Notifications
         }
 
     }
-
 }

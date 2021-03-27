@@ -2,7 +2,7 @@
 using System;
 using TicTacToe.Application.DTO;
 
-namespace WpfNavigable.Front.Queries
+namespace TicTacToe.Front.Queries
 {
     public class GameStatusQuery : IRequest<GameStatusDTO>
     {

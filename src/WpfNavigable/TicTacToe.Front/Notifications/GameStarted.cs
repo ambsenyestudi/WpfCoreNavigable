@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace WpfNavigable.Front.Notifications
+namespace TicTacToe.Front.Notifications
 {
     public class GameStarted : INotification
     {

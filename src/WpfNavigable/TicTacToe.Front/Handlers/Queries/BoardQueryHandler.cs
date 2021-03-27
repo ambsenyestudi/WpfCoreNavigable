@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using TicTacToe.Application.DTO;
 using TicTacToe.Application.Games;
-using WpfNavigable.Front.Queries;
+using TicTacToe.Front.Queries;
 
-namespace WpfNavigable.Front.Handlers.Queries
+namespace TicTacToe.Front.Handlers.Queries
 {
     public class BoardQueryHandler : IRequestHandler<GameSnapshotQuery, GameSnapshotDTO>
     {

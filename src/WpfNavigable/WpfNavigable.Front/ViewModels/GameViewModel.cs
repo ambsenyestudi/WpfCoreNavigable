@@ -1,21 +1,21 @@
 ﻿using MediatR;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using TicTacToe.Domain;
-using WpfNavigable.Front.Notifications;
-using WpfNavigable.Front.Queries;
-using WpfNavigable.Front.ViewModels.Base;
-using TicTacToe.Front.Models;
 using TicTacToe.Application.DTO;
 using TicTacToe.Application.Games;
-using System.Windows;
+using TicTacToe.Front;
+using TicTacToe.Front.Models;
+using TicTacToe.Front.Notifications;
+using TicTacToe.Front.Queries;
+using WpfNavigable.Front.ViewModels.Base;
 using WpfNavigable.Front.Views;
 
 namespace WpfNavigable.Front.ViewModels
 {
-    public class GameViewModel:ViewModelBase
+    public class GameViewModel : ViewModelBase, IGameHost
     {
         
 
@@ -73,12 +73,6 @@ namespace WpfNavigable.Front.ViewModels
 
         }
 
-        public void Reset(Guid gameId)
-        {
-            GameId = gameId;
-            BoardLayout = TicTacToeBoardLayout.Empty;
-        }
-
         private async void Play(int row, int column)
         {
             await mediator.Publish(new ChipPlayed(GameId, row, column));
@@ -98,7 +92,7 @@ namespace WpfNavigable.Front.ViewModels
                      "Game ended",
                      MessageBoxButton.OK,
                      MessageBoxImage.Question);
-                    Reset(Guid.Empty);
+                    Reset();
                     mediator.Publish(new Navigated(nameof(WelcomeView)));
                 }
             },DispatcherPriority.Background);
@@ -130,6 +124,13 @@ namespace WpfNavigable.Front.ViewModels
         private bool IsValidPostion(int row, int column) =>
             row >= 0 && column >= 0;
 
-        
+        public void Reset()
+        {
+            SetGameId(Guid.Empty);
+            BoardLayout = TicTacToeBoardLayout.Empty;
+        }
+
+        public void SetGameId(Guid id) =>
+            GameId = id;
     }
 }

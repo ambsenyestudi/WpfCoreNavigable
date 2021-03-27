@@ -2,21 +2,16 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using TicTacToe.Front;
 using WpfNavigable.Front.ViewModels.Base;
 using WpfNavigable.Front.Views;
 
 namespace WpfNavigable.Front.ViewModels
 {
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel:ViewModelBase, IPageHost
     {
-        public string CurrentView
-        {
-            set 
-            {
-                CurrentPage = PageCollection.FirstOrDefault(x => x.GetType().Name == value);
-            }
-        }
-
+        public Dispatcher Dispatcher { get; }
 
         private Page currentPage;
 
@@ -37,11 +32,19 @@ namespace WpfNavigable.Front.ViewModels
 
         public MainViewModel(IEnumerable<INavigable> viewCollection)
         {
+            Dispatcher = Dispatcher.CurrentDispatcher;
             var pageCollection = viewCollection.Select(x => x as Page);
             PageCollection = new ObservableCollection<Page>(pageCollection);
-            CurrentView = nameof(WelcomeView);
+            SetPage(nameof(WelcomeView));
         }
 
-        
+        public void SetPage(string pageName)
+        {
+            var page  = PageCollection.FirstOrDefault(x => x.GetType().Name == pageName);
+
+            Dispatcher.Invoke(() =>
+                    CurrentPage = page,
+                    DispatcherPriority.Background);
+        }
     }
 }

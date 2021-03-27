@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using TicTacToe.Application.Games;
+using TicTacToe.Front;
 using TicTacToe.Infrastructure.Games;
 using WpfNavigable.Front.ViewModels;
 using WpfNavigable.Front.Views;
@@ -35,13 +36,17 @@ namespace WpfNavigable.Front
             */
             services.AddSingleton<IGameService, GameService>();
             services.AddSingleton<IGameRepository, InMemoryGamesRepository>();
-            services.AddSingleton<GameViewModel>();
+            services.AddSingleton<GameViewModel>()
+                .AddSingleton<IGameHost>( provider =>
+                    provider.GetRequiredService<GameViewModel>());
             services.AddSingleton<INavigable, GameView>();
             services.AddSingleton<WelcomeViewModel>();
             services.AddSingleton<INavigable, WelcomeView>();
-            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<MainViewModel>()
+                .AddSingleton<IPageHost>(provider => 
+                    provider.GetRequiredService<MainViewModel>());
             services.AddSingleton<MainWindow>();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetAssembly(typeof(IPageHost)));
             //services.AddMemoryCache();
         }
         public void Configure(ApplicationBuilder application)
