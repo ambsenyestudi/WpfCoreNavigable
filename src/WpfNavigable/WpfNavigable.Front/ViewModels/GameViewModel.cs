@@ -116,8 +116,8 @@ namespace WpfNavigable.Front.ViewModels
 
         private bool IsPostionEmpty(int row, int column)
         {
-            //todo
-            return true;
+            var square = BoardLayout.GetChip(row, column);
+            return string.IsNullOrWhiteSpace(square);
         }
 
         private bool IsValidPostion(int row, int column) =>
