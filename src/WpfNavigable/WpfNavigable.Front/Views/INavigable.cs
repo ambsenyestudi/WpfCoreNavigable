@@ -2,6 +2,6 @@
 {
     public interface INavigable
     {
-        string ViewName { get; }
+        string ViewModelName { get; }
     }
 }

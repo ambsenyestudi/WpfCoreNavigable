@@ -2,6 +2,6 @@
 {
     public interface IPageHost
     {
-        void SetPage(string pageName);
+        void SetPage(string viewModelName);
     }
 }

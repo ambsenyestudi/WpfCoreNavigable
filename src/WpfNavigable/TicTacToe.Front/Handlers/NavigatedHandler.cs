@@ -14,7 +14,7 @@ namespace TicTacToe.Front.Handlers
             this.pageHost = pageHost;
         }
         public Task Handle(Navigated notification, CancellationToken cancellationToken) =>
-            Task.Factory.StartNew(() => pageHost.SetPage(notification.ViewName));
+            Task.Factory.StartNew(() => pageHost.SetPage(notification.ViewModelName));
 
     }
 }

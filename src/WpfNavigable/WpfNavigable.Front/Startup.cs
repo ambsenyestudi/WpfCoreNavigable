@@ -45,7 +45,11 @@ namespace WpfNavigable.Front
             services.AddSingleton<MainViewModel>()
                 .AddSingleton<IPageHost>(provider => 
                     provider.GetRequiredService<MainViewModel>());
-            services.AddSingleton<MainWindow>();
+            services.AddSingleton<MainWindow>(provider =>
+                new MainWindow 
+                { 
+                    DataContext = provider.GetRequiredService<MainViewModel>()
+                });
             services.AddMediatR(Assembly.GetAssembly(typeof(IPageHost)));
             //services.AddMemoryCache();
         }

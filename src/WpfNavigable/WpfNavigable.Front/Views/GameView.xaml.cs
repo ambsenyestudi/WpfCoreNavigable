@@ -8,9 +8,10 @@ namespace WpfNavigable.Front.Views
     /// </summary>
     public partial class GameView : Page, INavigable
     {
-        public string ViewName => nameof(GameView);
+        public string ViewModelName { get; }
         public GameView(GameViewModel viewModel)
         {
+            ViewModelName = viewModel.GetType().Name;
             DataContext = viewModel;
             InitializeComponent();
         }

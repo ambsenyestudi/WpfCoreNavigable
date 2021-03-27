@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 using TicTacToe.Front.Notifications;
 using WpfNavigable.Front.ViewModels.Base;
-using WpfNavigable.Front.Views;
 
 namespace WpfNavigable.Front.ViewModels
 {
@@ -21,7 +20,7 @@ namespace WpfNavigable.Front.ViewModels
         private void StartGame(object args)
         {
             mediator.Publish(new GameStarted());
-            mediator.Publish(new Navigated(nameof(GameView)));            
+            mediator.Publish(new Navigated(nameof(GameViewModel)));            
         }
 
         private void LaunchDialog()

@@ -4,10 +4,10 @@ namespace TicTacToe.Front.Notifications
 {
     public class Navigated : INotification
     {
-        public string ViewName { get; }
-        public Navigated(string viewName)
+        public string ViewModelName { get; }
+        public Navigated(string viewModelName)
         {
-            ViewName = viewName;
+            ViewModelName = viewModelName;
         }
 
     }

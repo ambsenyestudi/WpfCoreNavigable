@@ -1,8 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TicTacToe.Application.Games;
@@ -34,7 +30,7 @@ namespace TicTacToe.Front.Handlers
             catch (GameNotFoundException gnfEx)
             {
                 //Improve this
-                pageHost.SetPage("WelcomeView");
+                pageHost.SetPage("WelcomeViewModel");
             }
         }
     }

@@ -8,10 +8,11 @@ namespace WpfNavigable.Front.Views
     /// </summary>
     public partial class WelcomeView : Page, INavigable
     {
-        public string ViewName => nameof(WelcomeView);
+        public string ViewModelName { get; }
         public WelcomeView(WelcomeViewModel viewModel)
         {
             DataContext = viewModel;
+            ViewModelName = viewModel.GetType().Name;
             InitializeComponent();
         }
     }

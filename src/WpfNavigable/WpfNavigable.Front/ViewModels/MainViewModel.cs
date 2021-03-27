@@ -28,23 +28,26 @@ namespace WpfNavigable.Front.ViewModels
             }
         }
 
-        public ObservableCollection<Page> PageCollection { get; }
+        public IEnumerable<INavigable> ViewCollection { get; }
 
         public MainViewModel(IEnumerable<INavigable> viewCollection)
         {
             Dispatcher = Dispatcher.CurrentDispatcher;
             var pageCollection = viewCollection.Select(x => x as Page);
-            PageCollection = new ObservableCollection<Page>(pageCollection);
-            SetPage(nameof(WelcomeView));
+            ViewCollection = viewCollection;
+            SetPage(nameof(WelcomeViewModel));
         }
 
-        public void SetPage(string pageName)
+        public void SetPage(string viewModelName)
         {
-            var page  = PageCollection.FirstOrDefault(x => x.GetType().Name == pageName);
-
-            Dispatcher.Invoke(() =>
-                    CurrentPage = page,
-                    DispatcherPriority.Background);
+            var view  = ViewCollection.FirstOrDefault(x => x.ViewModelName == viewModelName);
+            var page = view as Page;
+            if (page != null)
+            {
+                Dispatcher.Invoke(() =>
+                        CurrentPage = page,
+                        DispatcherPriority.Background);
+            }
         }
     }
 }

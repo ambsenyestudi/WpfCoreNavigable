@@ -11,7 +11,6 @@ using TicTacToe.Front.Models;
 using TicTacToe.Front.Notifications;
 using TicTacToe.Front.Queries;
 using WpfNavigable.Front.ViewModels.Base;
-using WpfNavigable.Front.Views;
 
 namespace WpfNavigable.Front.ViewModels
 {
@@ -93,7 +92,7 @@ namespace WpfNavigable.Front.ViewModels
                      MessageBoxButton.OK,
                      MessageBoxImage.Question);
                     Reset();
-                    mediator.Publish(new Navigated(nameof(WelcomeView)));
+                    mediator.Publish(new Navigated(nameof(WelcomeViewModel)));
                 }
             },DispatcherPriority.Background);
         }
