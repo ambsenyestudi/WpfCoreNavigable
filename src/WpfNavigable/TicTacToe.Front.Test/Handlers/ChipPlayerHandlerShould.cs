@@ -8,7 +8,7 @@ using TicTacToe.Front.Handlers;
 using TicTacToe.Front.Notifications;
 using Xunit;
 
-namespace TicTacToe.Front.Test
+namespace TicTacToe.Front.Test.Handlers
 {
     public class ChipPlayerHandlerShould
     {
