@@ -3,10 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using TicTacToe.Application.Games;
+using TicTacToe.Front.Models;
 using TicTacToe.Infrastructure.Games;
 using WpfNavigable.Front.ViewModels;
 using WpfNavigable.Front.Views;
-
+using WpfNavigable.Front.ViewModels.Base;
 namespace WpfNavigable.Front
 {
     public class Startup
@@ -22,27 +23,21 @@ namespace WpfNavigable.Front
         public void ConfigureServices(IServiceCollection services)
         {
             /*
-            services.Configure<PathServiceSettings>(settings => Configuration.GetSection(nameof(PathServiceSettings)).Bind(settings));
-            services.Configure<CourseSettings>(settings => Configuration.GetSection(nameof(CourseSettings)).Bind(settings));
             services.Configure<LessonSettings>(settings => Configuration.GetSection(nameof(LessonSettings)).Bind(settings));
-            
             services.AddHttpClient<PathService>();
-            services.AddScoped<IPathService, PathCacheDecorator>(provider =>
-                new PathCacheDecorator(
-                    provider.GetService<PathService>(),
-                    provider.GetService<IMemoryCache>()));
-            services.AddSingleton<ITextService, TextService>();
             */
-            services.AddSingleton<IGameService, GameService>();
-            services.AddSingleton<IGameRepository, InMemoryGamesRepository>();
-            services.AddSingleton<GameViewModel>();
-            services.AddSingleton<INavigable, GameView>();
-            services.AddSingleton<WelcomeViewModel>();
-            services.AddSingleton<INavigable, WelcomeView>();
+            services
+                .AddSingleton<IGameService, GameService>()
+                .AddSingleton<IGameRepository, InMemoryGamesRepository>()
+                .AddViewModel<GameView, GameViewModel>()
+                .AddViewModel<WelcomeView, WelcomeViewModel>();
+
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<MainWindow>();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            //services.AddMemoryCache();
+            //services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetAssembly(typeof(TicTacToeBoardLayout)));
+
+
         }
         public void Configure(ApplicationBuilder application)
         {

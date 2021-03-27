@@ -1,14 +1,17 @@
 ﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
-using WpfNavigable.Front.Notifications;
-using WpfNavigable.Front.ViewModels;
+using TicTacToe.Front.Notifications;
 
-namespace WpfNavigable.Front.Handlers
+namespace TicTacToe.Front.Handlers
 {
     public class NavigatedHandler : INotificationHandler<Navigated>
     {
+        /*
         private readonly MainViewModel navigationHost;
         public Dispatcher Dispatcher { get; }
 
@@ -17,14 +20,20 @@ namespace WpfNavigable.Front.Handlers
             navigationHost = mainViewModel;
             Dispatcher = Dispatcher.CurrentDispatcher;
         }
-        public Task Handle(Navigated notification, CancellationToken cancellationToken) =>
-            Task.Factory.StartNew(() => 
-                Dispatcher.Invoke(()=> 
+        */
+        public Task Handle(Navigated notification, CancellationToken cancellationToken)
+        {
+            return Task.Delay(1);
+            /*
+            Task.Factory.StartNew(() =>
+                Dispatcher.Invoke(() =>
                     navigationHost.CurrentView = notification.ViewName,
                     DispatcherPriority.Background,
                     cancellationToken));
-   
-            //(DispatcherPriority.Background, new DispathcerDelegate (Navigated)delegate));
-        
+            */
+        }
+
+        //(DispatcherPriority.Background, new DispathcerDelegate (Navigated)delegate));
+
     }
 }

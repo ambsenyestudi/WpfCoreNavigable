@@ -1,23 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using TicTacToe.Front;
 using WpfNavigable.Front.ViewModels.Base;
 using WpfNavigable.Front.Views;
+using WpfNavigable.Front.Views.Navigations.Base;
 
 namespace WpfNavigable.Front.ViewModels
 {
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel : ViewModelBase, IPageHost
     {
-        public string CurrentView
-        {
-            set 
-            {
-                CurrentPage = PageCollection.FirstOrDefault(x => x.GetType().Name == value);
-            }
-        }
-
-
         private Page currentPage;
 
         public Page CurrentPage
@@ -33,15 +27,25 @@ namespace WpfNavigable.Front.ViewModels
             }
         }
 
-        public ObservableCollection<Page> PageCollection { get; }
+        public List<NavigablePage> ViewList { get; }
 
-        public MainViewModel(IEnumerable<INavigable> viewCollection)
+        public MainViewModel(IEnumerable<NavigablePage> viewCollection)
         {
-            var pageCollection = viewCollection.Select(x => x as Page);
-            PageCollection = new ObservableCollection<Page>(pageCollection);
-            CurrentView = nameof(WelcomeView);
+            ViewList = new List<NavigablePage>(viewCollection);
+            SetPage(nameof(WelcomeViewModel));
         }
 
-        
+        public void SetPage(string viewModelName)
+        {
+            var navigablePage = ViewList.FirstOrDefault(np => np.ViewModelName == viewModelName);
+            if(navigablePage is not null)
+            {
+                if(viewModelName is nameof(WelcomeViewModel))
+                {
+                    CurrentPage = (WelcomeView)navigablePage.Page;
+                }
+                
+            }
+        }
     }
 }

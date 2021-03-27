@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Windows;
 using System.Windows.Input;
-using WpfNavigable.Front.Notifications;
+using TicTacToe.Front.Notifications;
 using WpfNavigable.Front.ViewModels.Base;
 using WpfNavigable.Front.Views;
 

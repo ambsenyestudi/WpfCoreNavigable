@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using System;
 
-namespace WpfNavigable.Front.Notifications
+namespace TicTacToe.Front.Notifications
 {
-    public class ChipPlayed: INotification
+    public class ChipPlayed : INotification
     {
 
         public int Column { get; }
@@ -17,6 +17,6 @@ namespace WpfNavigable.Front.Notifications
             GameId = gameId;
         }
 
-        
+
     }
 }

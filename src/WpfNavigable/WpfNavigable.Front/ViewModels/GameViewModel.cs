@@ -1,16 +1,15 @@
 ﻿using MediatR;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using TicTacToe.Domain;
-using WpfNavigable.Front.Notifications;
-using WpfNavigable.Front.Queries;
-using WpfNavigable.Front.ViewModels.Base;
-using TicTacToe.Front.Models;
 using TicTacToe.Application.DTO;
 using TicTacToe.Application.Games;
-using System.Windows;
+using TicTacToe.Front.Models;
+using TicTacToe.Front.Notifications;
+using TicTacToe.Front.Queries;
+using WpfNavigable.Front.ViewModels.Base;
 using WpfNavigable.Front.Views;
 
 namespace WpfNavigable.Front.ViewModels

@@ -1,8 +1,12 @@
 ﻿using MediatR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TicTacToe.Application.DTO;
 
-namespace WpfNavigable.Front.Queries
+namespace TicTacToe.Front.Queries
 {
     public class GameStatusQuery : IRequest<GameStatusDTO>
     {
