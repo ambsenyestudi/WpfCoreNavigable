@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TicTacToe.Application.Games;
 using TicTacToe.Domain;
+using TicTacToe.Front.Models;
 using TicTacToe.Front.Notifications;
 
 namespace TicTacToe.Front.Handlers
@@ -23,15 +25,34 @@ namespace TicTacToe.Front.Handlers
 
         public async Task Handle(ChipPlayed notification, CancellationToken cancellationToken)
         {
-            try
+            if (IsValidPlay(notification))
             {
-                await gameService.PlayAsync(notification.GameId, notification.Row, notification.Column);
+                try
+                {
+                    await gameService.PlayAsync(notification.GameId, notification.Row, notification.Column);
+                }
+                catch (GameNotFoundException gnfEx)
+                {
+                    //Improve this
+                    pageHost.SetPage("WelcomeViewModel");
+                }
             }
-            catch (GameNotFoundException gnfEx)
+        }
+        private bool IsValidPlay(ChipPlayed chipPlayed)
+        {
+            if(chipPlayed.GameId == Guid.Empty)
             {
-                //Improve this
-                pageHost.SetPage("WelcomeViewModel");
+                return false;
             }
+            if(chipPlayed.Row < 0 || chipPlayed.Row >= TicTacToeBoardLayout.BOARD_SIZE)
+            {
+                return false;
+            }
+            if (chipPlayed.Column < 0 || chipPlayed.Column >= TicTacToeBoardLayout.BOARD_SIZE)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
