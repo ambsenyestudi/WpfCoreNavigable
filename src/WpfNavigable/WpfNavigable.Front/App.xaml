@@ -3,6 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WpfNavigable.Front">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="AppBackground" Color="White"/>
+        <SolidColorBrush x:Key="AppForeground" Color="Black"/>
+        <SolidColorBrush x:Key="AppButtonBackground" Color="LightGray"/>
+        <Style x:Key="AppBackgroundStyle" TargetType="Panel">
+            <Setter Property="Background" Value="{DynamicResource AppBackground}"/>
+        </Style>
+        <Style x:Key="AppButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{DynamicResource AppButtonBackground}"
+                                CornerRadius="3"
+                                BorderThickness="1"
+                                Padding="5"
+                                BorderBrush="{DynamicResource AppForeground}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="{DynamicResource AppForeground}"/>
+        </Style>
+        <Style x:Key="AppLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="{DynamicResource AppForeground}"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -7,11 +7,23 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WelcomeView">
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style x:Key="unadvertedButton" TargetType="Button">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
 
-    <Grid>
+    <Grid Style="{DynamicResource AppBackgroundStyle}">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Welcome to tic tac toe "/>
-            <Button Content="Start" Command="{Binding StartGameCommand}" HorizontalAlignment="Center"/>
+            <Label Content="Welcome to tic tac toe " Style="{DynamicResource AppLabelStyle}"/>
+            <Button Content="Start" Command="{Binding StartGameCommand}" 
+                    HorizontalAlignment="Center" Style="{DynamicResource AppButtonStyle}"/>
         </StackPanel>
+        <Button Content="i" Style="{StaticResource unadvertedButton}" Command="{Binding EasternCommand}"/>
     </Grid>
 </Page>

@@ -13,14 +13,16 @@
             <conv:BoardLayoutConverter x:Key="boardLayoutConverter" />
         </ResourceDictionary>
     </Page.Resources>
-    <Grid>
+    <Grid Style="{DynamicResource AppBackgroundStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Content="Tic Tac Toe" HorizontalAlignment="Center" FontSize="25"/>
-        <Label Content="You know" HorizontalAlignment="Center" Grid.Row="1"/>
+        <Label Content="Tic Tac Toe" Style="{DynamicResource AppLabelStyle}"
+               HorizontalAlignment="Center" FontSize="25"/>
+        <Label Content="You know the rules right?" Style="{DynamicResource AppLabelStyle}"
+               HorizontalAlignment="Center" Grid.Row="1"/>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -32,23 +34,32 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=00}" 
+            <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=00}"
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="00"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=01}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="01" Grid.Column="1"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=02}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="02" Grid.Column="2"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=10}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="10" Grid.Row="1"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=11}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="11" Grid.Row="1" Grid.Column="1"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=12}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="12" Grid.Row="1" Grid.Column="2"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=20}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="20" Grid.Row="2"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=21}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="21" Grid.Row="2" Grid.Column="1"/>
             <Button Content="{Binding BoardLayout, Converter={StaticResource boardLayoutConverter}, ConverterParameter=22}" 
+                    Style="{DynamicResource AppButtonStyle}"
                     FontSize="24" Command="{Binding PlayCommand}" CommandParameter="22" Grid.Row="2" Grid.Column="2"/>
         </Grid>
         

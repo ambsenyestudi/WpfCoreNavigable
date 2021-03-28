@@ -2,12 +2,18 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using TicTacToe.Application.Secrets;
 
-namespace WpfNavigable.Front
+namespace TicTacToe.Infrastructure.Secrets
 {
-    class EncryptionHelper
+    public class EncryptionService : IEncryptionService
     {
-        public static string Encrypt(string clearText, string encryptionKey)
+        private const string key = "123456789";
+        public string Decrypt(string encrypted) => DecryptText(encrypted, key);
+
+        public string Encrypt(string content) => EncryptText(content, key);
+
+        private string EncryptText(string clearText, string encryptionKey)
         {
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
             using (Aes encryptor = Aes.Create())
@@ -28,7 +34,7 @@ namespace WpfNavigable.Front
             return clearText;
         }
 
-        public static string Decrypt(string cipherText, string encryptionKey)
+        private string DecryptText(string cipherText, string encryptionKey)
         {
             cipherText = cipherText.Replace(" ", "+");
             byte[] cipherBytes = Convert.FromBase64String(cipherText);

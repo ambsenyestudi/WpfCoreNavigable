@@ -3,8 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using TicTacToe.Application.Games;
+using TicTacToe.Application.Secrets;
 using TicTacToe.Front;
 using TicTacToe.Infrastructure.Games;
+using TicTacToe.Infrastructure.Secrets;
 using WpfNavigable.Front.ViewModels;
 using WpfNavigable.Front.Views;
 
@@ -22,8 +24,9 @@ namespace WpfNavigable.Front
 
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.Configure<SecretsSettings>(settings => Configuration.GetSection(nameof(SecretsSettings)).Bind(settings));
             /*
-            services.Configure<PathServiceSettings>(settings => Configuration.GetSection(nameof(PathServiceSettings)).Bind(settings));
             services.Configure<CourseSettings>(settings => Configuration.GetSection(nameof(CourseSettings)).Bind(settings));
             services.Configure<LessonSettings>(settings => Configuration.GetSection(nameof(LessonSettings)).Bind(settings));
             
@@ -34,6 +37,8 @@ namespace WpfNavigable.Front
                     provider.GetService<IMemoryCache>()));
             services.AddSingleton<ITextService, TextService>();
             */
+            services.AddSingleton<IEncryptionService, EncryptionService>();
+            services.AddSingleton<ISecretsService, SecretsService>();
             services.AddSingleton<IGameService, GameService>();
             services.AddSingleton<IGameRepository, InMemoryGamesRepository>();
             services.AddSingleton<GameViewModel>()

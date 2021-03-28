@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using TicTacToe.Application.DTO;
 using TicTacToe.Application.Games;
+using TicTacToe.Application.Secrets;
 using TicTacToe.Front;
 using TicTacToe.Front.Models;
 using TicTacToe.Front.Notifications;
@@ -21,7 +22,7 @@ namespace WpfNavigable.Front.ViewModels
         public Dispatcher Dispatcher { get; }
 
         private readonly IMediator mediator;
-
+        
         public Guid GameId { get; private set; }
 
         public ICommand PlayCommand { get; }
@@ -54,22 +55,6 @@ namespace WpfNavigable.Front.ViewModels
             {
                 Play(row, column);
             }
-            //Move all of this to encryption service
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            path += @"\TicTacToe";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            var key = "123456789";
-            var filename = $@"{path}\WriteFile.txt";
-            var encryptedText = EncryptionHelper.Encrypt("Hello world", key);
-            File.WriteAllText(filename, encryptedText);
-            var readText = File.ReadAllText(filename);
-            Console.WriteLine(readText);
-            var regularText = EncryptionHelper.Decrypt(readText, key);
-            Console.WriteLine(regularText);
-
         }
 
         private async void Play(int row, int column)
