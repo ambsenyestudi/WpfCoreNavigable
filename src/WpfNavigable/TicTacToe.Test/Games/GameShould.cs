@@ -22,6 +22,7 @@ namespace TicTacToe.Test.Games
             var state = sut.GetBoardState();
             Assert.Equal(exptectedState, state);
         }
+
         [Fact]
         public void Start_Placing_X()
         {
@@ -31,6 +32,7 @@ namespace TicTacToe.Test.Games
             var result = sut.Play(BoardRowColumn.Create(0,0));
             Assert.Equal(exptectedResult, result);
         }
+
         [Fact]
         public void Place_O_After_X_Played()
         {
@@ -40,6 +42,7 @@ namespace TicTacToe.Test.Games
             var result = sut.Play(BoardRowColumn.Create(0, 0));
             Assert.Equal(exptectedResult, result);
         }
+
         [Fact]
         public void Not_Play_A_Played_Position()
         {
@@ -47,6 +50,7 @@ namespace TicTacToe.Test.Games
             sut.Play(BoardRowColumn.Create(0, 0));
             Assert.Throws<PostionAlreadyPlayedException>(() => sut.Play(BoardRowColumn.Create(0, 0)));
         }
+
         [Theory]
         [InlineData(
             X_WON,

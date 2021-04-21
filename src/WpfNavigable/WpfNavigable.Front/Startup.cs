@@ -26,17 +26,7 @@ namespace WpfNavigable.Front
         {
             
             services.Configure<SecretsSettings>(settings => Configuration.GetSection(nameof(SecretsSettings)).Bind(settings));
-            /*
-            services.Configure<CourseSettings>(settings => Configuration.GetSection(nameof(CourseSettings)).Bind(settings));
-            services.Configure<LessonSettings>(settings => Configuration.GetSection(nameof(LessonSettings)).Bind(settings));
-            
-            services.AddHttpClient<PathService>();
-            services.AddScoped<IPathService, PathCacheDecorator>(provider =>
-                new PathCacheDecorator(
-                    provider.GetService<PathService>(),
-                    provider.GetService<IMemoryCache>()));
-            services.AddSingleton<ITextService, TextService>();
-            */
+
             services.AddSingleton<IEncryptionService, EncryptionService>();
             services.AddSingleton<ISecretsService, SecretsService>();
             services.AddSingleton<IGameService, GameService>();
